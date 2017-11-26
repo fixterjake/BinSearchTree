@@ -6,22 +6,36 @@
 public class BinNode {
     
     /** Value held in the Node **/
-    Object value;
+    private Character value;
     /** Left Node **/
-    BinNode left;
+    private BinNode left;
     /** Right Node **/
-    BinNode right;
+    private BinNode right;
     
     /**
      * Default constructor for BinNode
      * @param value Given value
      */
-    public BinNode(Object value) {
-        this.value = value;
+    public BinNode() {
         left = null;
         right = null;
     }
     
+    /**
+     * Constructor with given value
+     * @param val Given value
+     */
+    public BinNode(Character value) {
+        left = null;
+        right = null;
+        this.value = value;
+    }
+    
+    public BinNode(Character value, BinNode left, BinNode right) {
+        this.left = left;
+        this.right = right;
+        this.value = value;
+    }
     /**
      * Getter for the left child
      * @return Left node
@@ -42,7 +56,7 @@ public class BinNode {
      * Setter for the node value
      * @param v Given value to set
      */
-    public void setValue(Object v) {
+    public void setValue(Character v) {
         this.value = v;
     }
     
@@ -50,7 +64,7 @@ public class BinNode {
      * Getter for the node value
      * @return Value
      */
-    public Object value() {
+    public Character value() {
         return value;
     }
     
@@ -59,11 +73,6 @@ public class BinNode {
      * @return True or false depending on if the node is a leaf
      */
     public boolean isLeaf() {
-        if (this.left == null && this.right == null) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return (left == null) && (right == null);
     }
 }

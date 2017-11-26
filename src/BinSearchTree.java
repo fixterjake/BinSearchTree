@@ -5,6 +5,9 @@
  */
 
 public class BinSearchTree implements BinSearchTreeADT {
+    
+    /** Root for BST **/
+    private BinNode root;
 
     /* (non-Javadoc)
      * @see BinSearchTreeADT#add(java.lang.Character)
@@ -47,7 +50,7 @@ public class BinSearchTree implements BinSearchTreeADT {
      */
     @Override
     public String preorder() {
-        // TODO Auto-generated method stub
+        String result = "";
         return null;
     }
 
