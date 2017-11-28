@@ -6,7 +6,7 @@
 public class BinNode {
     
     /** Value held in the Node **/
-    private Character value;
+    private Comparable value;
     /** Left Node **/
     private BinNode left;
     /** Right Node **/
@@ -25,13 +25,13 @@ public class BinNode {
      * Constructor with given value
      * @param val Given value
      */
-    public BinNode(Character value) {
+    public BinNode(Comparable value) {
         left = null;
         right = null;
         this.value = value;
     }
     
-    public BinNode(Character value, BinNode left, BinNode right) {
+    public BinNode(Comparable value, BinNode left, BinNode right) {
         this.left = left;
         this.right = right;
         this.value = value;
@@ -56,15 +56,41 @@ public class BinNode {
      * Setter for the node value
      * @param v Given value to set
      */
-    public void setValue(Character v) {
+    public void setValue(Comparable v) {
         this.value = v;
+    }
+    
+    /**
+     * Set the left node.
+     * @param left Given left node.
+     */
+    public void setLeft(BinNode left) {
+        this.left = left;
+    }
+    
+    /**
+     * Set the right node.
+     * @param right Given right node.
+     */
+    public void setRight(BinNode right) {
+        this.right = right;
+    }
+    /**
+     * Set value for an object that makes sure it is an instance of comparable
+     * @param v Given value
+     */
+    public void setValue(Object v) {
+        if (!(v instanceof Comparable)) {
+            throw new ClassCastException("A comparable object is required!");
+        }
+        value = (Comparable)v;
     }
     
     /**
      * Getter for the node value
      * @return Value
      */
-    public Character value() {
+    public Comparable value() {
         return value;
     }
     
