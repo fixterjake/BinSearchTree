@@ -27,8 +27,9 @@ public class BinSearchTree implements BinSearchTreeADT {
      */
     @Override
     public BinSearchTreeADT add(Character c) {
-        // TODO Auto-generated method stub
-        return null;
+        root = addHelp(root, c);
+        size++;
+        return this;
     }
 
     /*
@@ -38,8 +39,7 @@ public class BinSearchTree implements BinSearchTreeADT {
      */
     @Override
     public Integer countOf(Character c) {
-        // TODO Auto-generated method stub
-        return null;
+        return countOfHelp(root, c);
     }
 
     /*
@@ -49,8 +49,7 @@ public class BinSearchTree implements BinSearchTreeADT {
      */
     @Override
     public Integer height() {
-        // TODO Auto-generated method stub
-        return null;
+        return heightHelp(root);
     }
 
     /*
@@ -71,8 +70,7 @@ public class BinSearchTree implements BinSearchTreeADT {
      */
     @Override
     public String preorder() {
-        String result = "";
-        return null;
+        return preorderHelp(root);
     }
 
     /*
@@ -82,8 +80,12 @@ public class BinSearchTree implements BinSearchTreeADT {
      */
     @Override
     public BinSearchTreeADT remove(Character c) {
-        // TODO Auto-generated method stub
-        return null;
+        Comparable temp = findHelp(root, c);
+        if (temp != null) {
+            root = removeHelp(root, c);
+        }
+        size--;
+        return this;
     }
 
     /**
@@ -120,22 +122,25 @@ public class BinSearchTree implements BinSearchTreeADT {
      *            Key for comparing
      * @return Root that was inserted.
      */
-    private BinNode insertHelp(BinNode rt, Comparable e) {
+    private BinNode addHelp(BinNode rt, Comparable e) {
         if (rt == null) {
-            return new BinNode(e);
+            rt = new BinNode(e);
+            return rt;
         }
         if (rt.value().compareTo(e) >= 0) {
-            rt.setLeft(insertHelp(rt.left(), e));
+            rt.setLeft(addHelp(rt.left(), e));
         }
         else {
-            rt.setRight(insertHelp(rt.right(), e));
+            rt.setRight(addHelp(rt.right(), e));
         }
         return rt;
     }
-    
+
     /**
      * Method to delete the max from the tree.
-     * @param rt Root of given tree.
+     * 
+     * @param rt
+     *            Root of given tree.
      * @return Node that is deleted.
      */
     private BinNode deleteMax(BinNode rt) {
@@ -145,17 +150,21 @@ public class BinSearchTree implements BinSearchTreeADT {
         rt.setRight(deleteMax(rt.right()));
         return rt;
     }
-    
+
     private BinNode getMax(BinNode rt) {
         if (rt.right() == null) {
             return rt;
         }
         return getMax(rt.right());
     }
+
     /**
      * Method for removing a value.
-     * @param rt Root of given tree.
-     * @param key Key for comparing
+     * 
+     * @param rt
+     *            Root of given tree.
+     * @param key
+     *            Key for comparing
      * @return Root that was removed
      */
     private BinNode removeHelp(BinNode rt, Comparable key) {
@@ -182,6 +191,64 @@ public class BinSearchTree implements BinSearchTreeADT {
             }
         }
         return rt;
+    }
+
+    /**
+     * Method to implement the countOf method
+     * 
+     * @param rt
+     *            Given root
+     * @param c
+     *            Given character to compare
+     * @return Number of nodes that are less than given node
+     */
+    private Integer countOfHelp(BinNode rt, Character c) {
+        if (rt == null) {
+            return 0;
+        }
+
+        int countRight = countOfHelp(rt.right(), c);
+        int countLeft = countOfHelp(rt.left(), c);
+
+        if (rt.value().compareTo(c) > 0) {
+            return 1 + countRight + countLeft;
+        }
+        else {
+            return countLeft + countRight;
+        }
+    }
+
+    /**
+     * Method to help find the height of a tree.
+     * 
+     * @param rt
+     *            Given root.
+     * @return Height of tree.
+     */
+    private Integer heightHelp(BinNode rt) {
+        if (rt == null) {
+            return 0;
+        }
+        return 1 + Math.max(heightHelp(rt.left()), heightHelp(rt.right()));
+    }
+
+    /**
+     * Method to help get the preorder traversal of a tree.
+     * 
+     * @param rt
+     *            Given root.
+     * @return Preorder of tree.s
+     */
+    private String preorderHelp(BinNode rt) {
+        String result = "";
+        if (rt == null) {
+            return "";
+        }
+        result += root.value();
+        preorderHelp(rt.left());
+        preorderHelp(rt.right());
+
+        return result;
     }
 
 }
