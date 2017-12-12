@@ -6,15 +6,14 @@
 public class BinNode {
     
     /** Value held in the Node **/
-    private Comparable value;
+    private Character value;
     /** Left Node **/
     private BinNode left;
     /** Right Node **/
     private BinNode right;
     
     /**
-     * Default constructor for BinNode
-     * @param value Given value
+     * Default constructor.
      */
     public BinNode() {
         left = null;
@@ -22,16 +21,22 @@ public class BinNode {
     }
     
     /**
-     * Constructor with given value
-     * @param val Given value
+     * Constructor with value param.
+     * @param value Given value
      */
-    public BinNode(Comparable value) {
+    public BinNode(Character value) {
         left = null;
         right = null;
         this.value = value;
     }
     
-    public BinNode(Comparable value, BinNode left, BinNode right) {
+    /**
+     * Constructor with value, left, and right param.
+     * @param value Given vlaue.
+     * @param left Given left child.
+     * @param right Given right child.
+     */
+    public BinNode(Character value, BinNode left, BinNode right) {
         this.left = left;
         this.right = right;
         this.value = value;
@@ -56,7 +61,7 @@ public class BinNode {
      * Setter for the node value
      * @param v Given value to set
      */
-    public void setValue(Comparable v) {
+    public void setValue(Character v) {
         this.value = v;
     }
     
@@ -75,22 +80,12 @@ public class BinNode {
     public void setRight(BinNode right) {
         this.right = right;
     }
-    /**
-     * Set value for an object that makes sure it is an instance of comparable
-     * @param v Given value
-     */
-    public void setValue(Object v) {
-        if (!(v instanceof Comparable)) {
-            throw new ClassCastException("A comparable object is required!");
-        }
-        value = (Comparable)v;
-    }
     
     /**
      * Getter for the node value
      * @return Value
      */
-    public Comparable value() {
+    public Character value() {
         return value;
     }
     

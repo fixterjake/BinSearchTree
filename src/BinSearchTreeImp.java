@@ -5,7 +5,7 @@
  * @version 1.0
  */
 
-public class BinSearchTree implements BinSearchTreeADT {
+public class BinSearchTreeImp implements BinSearchTreeADT {
 
     /** Root for BST **/
     private BinNode root;
@@ -15,8 +15,17 @@ public class BinSearchTree implements BinSearchTreeADT {
     /**
      * Default constructor
      */
-    public BinSearchTree() {
+    public BinSearchTreeImp() {
         root = null;
+        size = 0;
+    }
+    
+    /**
+     * Constructor with given root.
+     * @param root Given root.
+     */
+    public BinSearchTreeImp(BinNode root) {
+        this.root = root;
         size = 0;
     }
 
@@ -59,8 +68,15 @@ public class BinSearchTree implements BinSearchTreeADT {
      */
     @Override
     public BinSearchTreeADT mkFull() {
-        // TODO Auto-generated method stub
-        return null;
+        BinNode a = new BinNode('a');
+        BinNode c = new BinNode('c');
+        BinNode b = new BinNode('b', a, c);
+        BinNode e = new BinNode('e');
+        BinNode g = new BinNode('g');
+        BinNode f = new BinNode('f', e, g);
+        BinNode d = new BinNode('d', b, f);
+        BinSearchTreeImp full = new BinSearchTreeImp(d);
+        return full;
     }
 
     /*
@@ -80,37 +96,9 @@ public class BinSearchTree implements BinSearchTreeADT {
      */
     @Override
     public BinSearchTreeADT remove(Character c) {
-        Comparable temp = findHelp(root, c);
-        if (temp != null) {
-            root = removeHelp(root, c);
-        }
+        root = removeHelp(root, c);
         size--;
         return this;
-    }
-
-    /**
-     * Method for finding a value.
-     * 
-     * @param rt
-     *            Root of given tree.
-     * @param key
-     *            Key for comparing.
-     * @return The value if found.
-     */
-    private Comparable findHelp(BinNode rt, Comparable key) {
-        if (rt == null) {
-            return null;
-        }
-        if (rt.value().compareTo(key) > 0) {
-            return findHelp(rt.left(), key);
-        }
-        else if (rt.value().compareTo(key) == 0) {
-            return rt.value();
-        }
-        else {
-            return findHelp(rt.right(), key);
-        }
-
     }
 
     /**
@@ -122,7 +110,7 @@ public class BinSearchTree implements BinSearchTreeADT {
      *            Key for comparing
      * @return Root that was inserted.
      */
-    private BinNode addHelp(BinNode rt, Comparable e) {
+    private BinNode addHelp(BinNode rt, Character e) {
         if (rt == null) {
             rt = new BinNode(e);
             return rt;
@@ -150,7 +138,12 @@ public class BinSearchTree implements BinSearchTreeADT {
         rt.setRight(deleteMax(rt.right()));
         return rt;
     }
-
+    
+    /**
+     * Get max value in tree.
+     * @param rt Given root.
+     * @return Max value in tree.
+     */
     private BinNode getMax(BinNode rt) {
         if (rt.right() == null) {
             return rt;
@@ -167,7 +160,7 @@ public class BinSearchTree implements BinSearchTreeADT {
      *            Key for comparing
      * @return Root that was removed
      */
-    private BinNode removeHelp(BinNode rt, Comparable key) {
+    private BinNode removeHelp(BinNode rt, Character key) {
         if (rt == null) {
             return null;
         }
@@ -210,7 +203,9 @@ public class BinSearchTree implements BinSearchTreeADT {
         int countRight = countOfHelp(rt.right(), c);
         int countLeft = countOfHelp(rt.left(), c);
 
-        if (rt.value().compareTo(c) > 0) {
+
+        int compareTo = rt.value().compareTo(c);
+        if (compareTo > 0) {
             return 1 + countRight + countLeft;
         }
         else {
@@ -241,14 +236,20 @@ public class BinSearchTree implements BinSearchTreeADT {
      */
     private String preorderHelp(BinNode rt) {
         String result = "";
-        if (rt == null) {
-            return "";
+        if (rt != null) {
+            result += rt.value();
+            result += this.preorderHelp(rt.left());
+            result += this.preorderHelp(rt.right());
         }
-        result += root.value();
-        preorderHelp(rt.left());
-        preorderHelp(rt.right());
-
         return result;
+    }
+    
+    /**
+     * Getter for tree size.
+     * @return Size of tree.
+     */
+    public int getSize() {
+        return size;
     }
 
 }
